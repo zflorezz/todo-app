@@ -23,6 +23,10 @@ const addTodo = () => {
 
 }
 
+const removeTodo = (todo) => {
+  todos.value = todos.value.filter(t => t !== todo)
+}
+
 </script>
 
 <template>
@@ -52,7 +56,7 @@ const addTodo = () => {
           <label>
             <input type="radio" name="category" value="personal" v-model="input_category" />
             <span class="bubble personal"></span>
-            <div>personal</div>
+            <div>Personal</div>
           </label>
 
           <!-- {{ input_category }} -->
@@ -68,12 +72,14 @@ const addTodo = () => {
         <div v-for="todo in todos" :class="`todo-item ${todo.done ? `done` : `not-done`}`" :key="todo">
         <label>
           <input type="checkbox" v-model="todo.done" />
+          <span :class="`bubble ${todo.category}`"></span>
         </label>
-        <span :class="`bubble ${todo.category}`"></span>
         <div class="todo-content">
           <input type="text" v-model="todo.content" />
         </div>
-        
+        <div class="actions">
+          <button class="delete" @click="removeTodo(todo)">Delete</button>
+        </div>
         </div>
       </div>
     </section>
